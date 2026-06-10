@@ -1,4 +1,4 @@
-const { add, sub, mul, div } = require('../calculator');
+const { add, sub, mul, div, modulo, power, squareRoot } = require('../calculator');
 
 describe('calculator basic operations', () => {
   test('addition of two numbers', () => {
@@ -44,5 +44,49 @@ describe('calculator basic operations', () => {
   test('invalid operands (non-number) throw', () => {
     expect(() => add(2, NaN)).toThrow(/Invalid numeric operand/);
     expect(() => sub('a', 2)).toThrow(/Invalid numeric operand/);
+  });
+});
+
+describe('extended operations: mod, pow, sqrt', () => {
+  test('modulo of two numbers', () => {
+    expect(modulo(10, 3)).toBe(1);
+  });
+
+  test('modulo with negative dividend', () => {
+    expect(modulo(-10, 3)).toBe(-10 % 3);
+  });
+
+  test('modulo by zero throws', () => {
+    expect(() => modulo(10, 0)).toThrow('modulo by zero');
+  });
+
+  test('power base exponent', () => {
+    expect(power(2, 8)).toBe(256);
+  });
+
+  test('power with exponent zero', () => {
+    expect(power(5, 0)).toBe(1);
+  });
+
+  test('power with negative exponent', () => {
+    expect(power(2, -1)).toBeCloseTo(0.5);
+  });
+
+  test('square root of positive number', () => {
+    expect(squareRoot(9)).toBe(3);
+  });
+
+  test('square root of zero', () => {
+    expect(squareRoot(0)).toBe(0);
+  });
+
+  test('square root of negative number throws', () => {
+    expect(() => squareRoot(-4)).toThrow('square root of negative number');
+  });
+
+  test('invalid operands for new ops throw', () => {
+    expect(() => modulo('a', 2)).toThrow(/Invalid numeric operand/);
+    expect(() => power(2, 'b')).toThrow(/Invalid numeric operand/);
+    expect(() => squareRoot('x')).toThrow(/Invalid numeric operand/);
   });
 });
